@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('searching for "pliers" returns only pliers', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   await page.getByRole('textbox', { name: 'Search' }).fill('pliers');
   await page.getByRole('button', { name: 'Search', exact: true }).click();
