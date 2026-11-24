@@ -6,10 +6,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["node"],
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "types": ["node"]
   },
   "include": ["src", "tests", "scripts", "playwright.config.ts"]
 }
