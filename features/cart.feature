@@ -7,6 +7,7 @@ Feature: Shopping cart
     Given I am on the Toolshop home page
     And my cart is empty
 
+  @automated
   Example: Add one product to the cart
     When I open the "Combination Pliers" product page
     And I add it to my cart

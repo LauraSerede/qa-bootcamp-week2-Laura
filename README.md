@@ -53,13 +53,24 @@ If tests fail with `403` or `404` errors from `api.practicesoftwaretesting.com`,
 | `tests/api-products.spec.ts` | API | GET /products returns 200 and the first page |
 | `tests/api-carts.spec.ts` | API | A product added to a new cart appears in it, and an unknown cart id returns 404. Every cart a test creates is deleted afterwards, even if the test fails. |
 
+## Cucumber (BDD) scenario
+
+One example in `features/cart.feature`, "Add one product to the cart", is tagged `@automated` and connected to step definitions in `features/step-definitions/cart.steps.ts`. The step definitions use Playwright to drive a real browser. Run it with:
+
+```bash
+npm run bdd
+```
+
+It should report `1 scenario (1 passed)`. The other examples in the feature file are descriptions only and are not run.
+
 ## Folders
 
 | Folder | What it is for |
 | ------ | -------------- |
 | `tests/` | The Playwright tests. |
 | `tests/pages/` | Page objects. `login-page.ts` holds the login page's locators and actions. |
-| `features/` | Gherkin feature files. `cart.feature` describes the cart flow in plain language. It is not automated: the optional Cucumber-js step was not completed. |
+| `features/` | Gherkin feature files. `cart.feature` describes the cart flow in plain language. |
+| `features/step-definitions/` | Cucumber-js step definitions that connect the feature file to Playwright. |
 | `src/` | TypeScript practice exercises from Day 6. |
 | `scripts/` | Helper scripts. `check.ts` checks your setup and is run by `npm run check`. |
 
