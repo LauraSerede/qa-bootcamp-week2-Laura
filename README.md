@@ -1,68 +1,66 @@
-# QA Bootcamp Week 2 Starter
+# QA Bootcamp Week 2: Toolshop test suite
 
-This is the starting point for Week 2 of the QA bootcamp. During the week you will use it to practise:
-
-- TypeScript
-- Playwright (UI testing)
-- Postman (API testing)
-- The Toolshop REST API
-
-There are no tests in this repo. You will write them during the week.
+A Playwright test suite for [Toolshop](https://practicesoftwaretesting.com), with UI tests that drive the website in a browser and API tests that call the Toolshop API directly.
 
 ## Prerequisites
 
-Install these before you start:
-
 - [Node.js](https://nodejs.org/) (the current LTS version)
 - [Git](https://git-scm.com/)
-- [VS Code](https://code.visualstudio.com/)
 
-## Setup
+Clone the repo and open the folder:
 
-Run these steps in order from a terminal.
+```bash
+git clone https://github.com/LauraSerede/qa-bootcamp-week2-Laura.git
+cd qa-bootcamp-week2-Laura
+```
 
-1. Clone the repo and open the folder:
+## Run the suite in three steps
 
-   ```bash
-   git clone <repo-url>
-   cd qa-bootcamp-week2-starter
-   ```
-
-2. Install the dependencies:
+1. **Install** the dependencies and the Chromium browser:
 
    ```bash
    npm install
-   ```
-
-3. Install the Chromium browser for Playwright:
-
-   ```bash
    npx playwright install chromium
    ```
 
-4. Copy `.env.example` to `.env`:
+2. **Copy** `.env.example` to `.env`:
 
    ```bash
    cp .env.example .env
    ```
 
-   `.env` already contains the Toolshop website URL (`TOOLSHOP_URL`) and the Toolshop API URL (`TOOLSHOP_API_URL`). Only change them if your trainer gives you different URLs.
+   `.env` holds the Toolshop website and API URLs. You don't need to change them.
 
-5. Check that your setup works:
+3. **Run** the tests:
 
    ```bash
-   npm run check
+   npm test
    ```
 
-   This sends a GET request to the Toolshop API's `/products` endpoint (no login needed). If everything is set up correctly, it prints your Node version, the HTTP status (200), the number of products, and a last line that says `PASS`.
+   All 6 tests should pass. To watch the UI tests in a browser, run `npx playwright test --headed`.
 
-> **Warning:** never commit `.env`. It is where your own settings and, later in the course, your secrets (keys, tokens, passwords) live. It is listed in `.gitignore` so Git ignores it. Do not remove it from there.
+> **Warning:** never commit `.env`. It is where your own settings and, later in the course, your secrets (keys, tokens, passwords) live. It is listed in `.gitignore` so Git ignores it.
+
+If tests fail with `403` or `404` errors from `api.practicesoftwaretesting.com`, check that <https://api.practicesoftwaretesting.com/products> shows product data. The public API is sometimes down, and the login and search UI tests depend on it too.
+
+## What's in the suite
+
+| File | Type | What it checks |
+| ---- | ---- | -------------- |
+| `tests/home.spec.ts` | UI | The home page has the expected title |
+| `tests/search.spec.ts` | UI | A search for "pliers" returns only products with "pliers" in the name |
+| `tests/login.spec.ts` | UI (page object) | An invalid login shows "Invalid email or password" |
+| `tests/api-products.spec.ts` | API | GET /products returns 200 and the first page |
+| `tests/api-carts.spec.ts` | API | A product added to a new cart appears in it, and an unknown cart id returns 404. Every cart a test creates is deleted afterwards, even if the test fails. |
 
 ## Folders
 
-| Folder     | What it is for |
-|------------|----------------|
-| `tests/`   | Your Playwright tests. It is empty for now; you will add tests during the week. |
+| Folder | What it is for |
+| ------ | -------------- |
+| `tests/` | The Playwright tests. |
+| `tests/pages/` | Page objects. `login-page.ts` holds the login page's locators and actions. |
+| `features/` | Gherkin feature files. `cart.feature` describes the cart flow in plain language. It is not automated: the optional Cucumber-js step was not completed. |
+| `src/` | TypeScript practice exercises from Day 6. |
 | `scripts/` | Helper scripts. `check.ts` checks your setup and is run by `npm run check`. |
 
 ## Scripts
@@ -73,7 +71,9 @@ Run these steps in order from a terminal.
 ## Week 2 Day 6: TypeScript basics
 
 ### `src/ts-basics/`
+
 Practice files for core TypeScript features:
+
 - `functions.ts`: typed parameters, default values and return types
 - `objects.ts`: object types with `readonly` properties and methods
 - `type-aliases.ts`: reusable object types with `type`
@@ -82,6 +82,7 @@ Practice files for core TypeScript features:
 - `tuples.ts`: fixed-length arrays where each position has its own type
 
 ### `src/profile-validator.ts`
+
 Reads a user's `notifications` setting safely when `settings` or `notifications` might be missing. It uses `?.` and `?? false`, so it never throws at runtime.
 
 Run it with:
