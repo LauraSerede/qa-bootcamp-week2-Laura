@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from './pages/login-page';
 
 test('invalid login is rejected with an error message', async ({ page }) => {
-  await page.goto('/auth/login', { waitUntil: 'domcontentloaded' });
+  const loginPage = new LoginPage(page);
 
-  await page.getByRole('textbox', { name: 'Email address' }).fill('wrong@example.com');
-  await page.getByRole('textbox', { name: 'Password' }).fill('WrongPassword1!');
-  await page.getByRole('button', { name: 'Login', exact: true }).click();
+  await loginPage.goto();
+  await loginPage.login('wrong@example.com', 'WrongPassword1!');
 
-  await expect(page.getByText('Invalid email or password')).toBeVisible();
+  await expect(loginPage.errorMessage).toBeVisible();
 });
