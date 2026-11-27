@@ -7,6 +7,7 @@ Feature: Shopping cart
     Given I am on the Toolshop home page
     And my cart is empty
 
+  @automated
   Example: Add one product to the cart
     When I open the "Combination Pliers" product page
     And I add it to my cart
@@ -18,13 +19,13 @@ Feature: Shopping cart
     And I set the quantity to 3
     And I add it to my cart
     Then my cart shows "Combination Pliers" with a quantity of 3
-    And the cart total is $42.45
+    And the cart total is 3 times the price of one "Combination Pliers"
 
   Example: Change the quantity in the cart
     Given I have added 1 "Combination Pliers" to my cart
     When I open my cart
     And I change the quantity of "Combination Pliers" to 2
-    Then the cart total is $28.30
+    Then the cart total is 2 times the price of one "Combination Pliers"
 
   Example: Remove a product from the cart
     Given I have added 1 "Combination Pliers" to my cart

@@ -2,10 +2,12 @@
   "name": "qa-bootcamp-week2-starter",
   "private": true,
   "scripts": {
+    "bdd": "cucumber-js",
     "check": "tsx scripts/check.ts",
     "test": "playwright test --pass-with-no-tests"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "13.3.0",
     "@playwright/test": "1.65.1",
     "@types/node": "26.6.6",
     "dotenv": "18.0.10",
