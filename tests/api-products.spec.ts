@@ -9,4 +9,7 @@ test('GET /products returns the first page of products', async ({ request }) => 
 
   const body = await response.json();
   expect(body.current_page).toBe(1);
+  // current_page alone would pass for an empty page, so check real products came back.
+  expect(body.data.length).toBeGreaterThan(0);
+  expect(body.data[0].name).toBeTruthy();
 });

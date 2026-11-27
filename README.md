@@ -37,7 +37,7 @@ cd qa-bootcamp-week2-Laura
    npm test
    ```
 
-   All 6 tests should pass. To watch the UI tests in a browser, run `npx playwright test --headed`.
+   All 7 tests should pass. To watch the UI tests in a browser, run `npx playwright test --headed`.
 
 > **Warning:** never commit `.env`. It is where your own settings and, later in the course, your secrets (keys, tokens, passwords) live. It is listed in `.gitignore` so Git ignores it.
 
@@ -50,7 +50,8 @@ If tests fail with `403` or `404` errors from `api.practicesoftwaretesting.com`,
 | `tests/home.spec.ts` | UI | The home page has the expected title |
 | `tests/search.spec.ts` | UI | A search for "pliers" returns only products with "pliers" in the name |
 | `tests/login.spec.ts` | UI (page object) | An invalid login shows "Invalid email or password" |
-| `tests/api-products.spec.ts` | API | GET /products returns 200 and the first page |
+| `tests/add-to-cart.spec.ts` | UI (page object) | Adding a quantity of 5 to the cart shows 5 items in the cart |
+| `tests/api-products.spec.ts` | API | GET /products returns 200 and a first page that contains products |
 | `tests/api-carts.spec.ts` | API | A product added to a new cart appears in it, and an unknown cart id returns 404. Every cart a test creates is deleted afterwards, even if the test fails. |
 
 ## Cucumber (BDD) scenario
@@ -68,7 +69,7 @@ It should report `1 scenario (1 passed)`. The other examples in the feature file
 | Folder | What it is for |
 | ------ | -------------- |
 | `tests/` | The Playwright tests. |
-| `tests/pages/` | Page objects. `login-page.ts` holds the login page's locators and actions. |
+| `tests/pages/` | Page objects. `login-page.ts` and `product-page.ts` hold each page's locators and actions. |
 | `features/` | Gherkin feature files. `cart.feature` describes the cart flow in plain language. |
 | `features/step-definitions/` | Cucumber-js step definitions that connect the feature file to Playwright. |
 | `src/` | TypeScript practice exercises from Day 6. |
