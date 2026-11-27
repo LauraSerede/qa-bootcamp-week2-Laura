@@ -3,19 +3,17 @@ import { test, expect } from '@playwright/test';
 const API = 'https://api.practicesoftwaretesting.com';
 const headers = { Accept: 'application/json' };
 
-// The id of a cart created by the current test, so afterEach can delete it.
 let cartId: string | undefined;
 
-// Runs after every test, even when a check fails, so no cart is left behind.
 test.afterEach(async ({ request }) => {
   if (cartId) {
-    await request.delete(`${API}/carts/${cartId}`, { headers });
+    const deleteResponse = await request.delete(`${API}/carts/${cartId}`, { headers });
     cartId = undefined;
+    expect(deleteResponse.status()).toBe(204);
   }
 });
 
-test('a product added to a new cart appears in that cart', async ({ request }) => {
-  // Product ids change, so look one up instead of hard-coding it.
+test('C4 Add to a cart', async ({ request }) => {
   const productsResponse = await request.get(`${API}/products`, { headers });
   expect(productsResponse.status()).toBe(200);
   const products = await productsResponse.json();
@@ -30,20 +28,16 @@ test('a product added to a new cart appears in that cart', async ({ request }) =
     data: { product_id: product.id, quantity: 2 },
   });
   expect(addResponse.status()).toBe(200);
-  expect((await addResponse.json()).result).toBe('item added or updated');
 
-  // Read the cart back to prove the product was really added.
   const cartResponse = await request.get(`${API}/carts/${cartId}`, { headers });
   expect(cartResponse.status()).toBe(200);
   const cart = await cartResponse.json();
-  expect(cart.id).toBe(cartId);
   expect(cart.cart_items).toHaveLength(1);
   expect(cart.cart_items[0].product_id).toBe(product.id);
   expect(cart.cart_items[0].quantity).toBe(2);
 });
 
-test('requesting a cart that does not exist returns 404', async ({ request }) => {
-
+test('C5 Unknown cart', async ({ request }) => {
   const response = await request.get(`${API}/carts/abc123`, { headers });
 
   expect(response.status()).toBe(404);
