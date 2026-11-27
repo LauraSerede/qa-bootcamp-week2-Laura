@@ -71,14 +71,14 @@ Gate one: can it be automated reliably? Gate two: is it worth automating?
 
 ### Test-design notes
 
-**C1 Search by name (UI)**
+#### C1 Search by name (UI)
 
 - Expected result: after searching for "pliers", at least one product is shown and every product name contains "pliers".
 - Test data: the search term "pliers". The shop currently has 4 matching products, but the test does not depend on the exact number.
 - Could pass when it should fail: if the test read the product names before the search finished, or found no products at all, a loop over the names would have nothing to check and pass. The test waits for the "Searched for: pliers" heading and requires at least one result to prevent this.
 - Could fail when it should pass: if the site is slow, the old unfiltered list may still be showing when the names are first read. The check retries with `toPass()` until the results have updated, instead of using a fixed wait.
 
-**C4 Add to a cart (API)**
+#### C4 Add to a cart (API)
 
 - Expected result: creating a cart returns 201, adding a product returns 200, and reading the cart back shows exactly one item with that product id and a quantity of 2.
 - Test data: a new cart created by the test, and the first in-stock product looked up from `/products` at runtime. The cart is deleted afterwards.
