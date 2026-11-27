@@ -10,7 +10,6 @@ export class SearchPage {
     this.page = page;
     this.searchBox = page.getByRole('textbox', { name: 'Search' });
     this.searchButton = page.getByRole('button', { name: 'Search', exact: true });
-    // Each product name in the results is a level-5 heading.
     this.productNames = page.getByRole('heading', { level: 5 });
   }
 
@@ -23,7 +22,6 @@ export class SearchPage {
     await this.searchButton.click();
   }
 
-  // The heading the site shows once results for a search have loaded.
   resultsHeading(term: string): Locator {
     return this.page.getByRole('heading', { name: `Searched for: ${term}` });
   }
