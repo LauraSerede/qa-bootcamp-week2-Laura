@@ -37,7 +37,7 @@ cd qa-bootcamp-week2-Laura
    npm test
    ```
 
-   All 7 tests should pass. To watch the UI tests in a browser, run `npx playwright test --headed`.
+   All 8 tests should pass. To watch the UI tests in a browser, run `npx playwright test --headed`.
 
 > **Warning:** never commit `.env`. It is where your own settings and, later in the course, your secrets (keys, tokens, passwords) live. It is listed in `.gitignore` so Git ignores it.
 
@@ -53,6 +53,7 @@ If tests fail with `403` or `404` errors from `api.practicesoftwaretesting.com`,
 | `tests/login.spec.ts` | UI (page object) | An invalid login shows "Invalid email or password" |
 | `tests/add-to-cart.spec.ts` | UI (page object) | Adding a quantity of 5 to the cart shows 5 items in the cart |
 | `tests/api-products.spec.ts` | API | GET /products returns 200 and a first page that contains products |
+| `tests/drill/save-message.spec.ts` | UI (local page) | Flakiness drill: clicking Save shows "Saved". It waits for the message with `toHaveText` instead of a fixed wait. |
 
 ## Capstone
 

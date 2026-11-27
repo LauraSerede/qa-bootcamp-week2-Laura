@@ -8,8 +8,5 @@ test('Save shows the Saved message', async ({ page }) => {
   await page.goto(drillPage);
   await page.getByRole('button', { name: 'Save' }).click();
 
-  await page.waitForTimeout(500);
-  const message = await page.getByRole('paragraph').textContent();
-
-  expect(message).toBe('Saved');
+  await expect(page.getByRole('paragraph')).toHaveText('Saved');
 });
